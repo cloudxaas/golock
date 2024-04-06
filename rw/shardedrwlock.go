@@ -1,6 +1,6 @@
 // Package shardedrwlock provides a sharded read-write lock mechanism to reduce lock contention
 // in concurrent applications by distributing locks across multiple shards based on the hash of a key.
-package shardedrwlock
+package cxlockrw
 
 /*
 #cgo LDFLAGS: -lpthread
