@@ -40,7 +40,6 @@ void rwlock_unlock(pthread_rwlock_t *lock) {
 import "C"
 import (
 	"hash/fnv"
-	"runtime"
 	"unsafe"
 )
 
