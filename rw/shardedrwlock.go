@@ -99,7 +99,7 @@ func (lock *ShardedRWLock) Close() {
 		lock.shards[i].destroy()
 	}
 }
-
+/*
 // getShard selects the appropriate shard based on the hash of a key.
 func (lock *ShardedRWLock) getShard(key string) *RWLockShard {
 	hasher := fnv.New32a()
@@ -107,27 +107,24 @@ func (lock *ShardedRWLock) getShard(key string) *RWLockShard {
 	hash := hasher.Sum32()
 	return &lock.shards[hash%uint32(len(lock.shards))]
 }
+*/
 
 // RLock acquires a read lock for the shard corresponding to the provided key.
-func (lock *ShardedRWLock) RLock(key string) {
-	shard := lock.getShard(key)
-	shard.rlock()
+func (lock *ShardedRWLock) RLock(shardnum uint32) {
+	lock.shards[shardnum].rlock()
 }
 
 // RUnlock releases a read lock for the shard corresponding to the provided key.
-func (lock *ShardedRWLock) RUnlock(key string) {
-	shard := lock.getShard(key)
-	shard.runlock()
+func (lock *ShardedRWLock) RUnlock(shardnum uint32) {
+	lock.shards[shardnum].runlock()
 }
 
 // Lock acquires a write lock for the shard corresponding to the provided key.
-func (lock *ShardedRWLock) Lock(key string) {
-	shard := lock.getShard(key)
-	shard.lock()
+func (lock *ShardedRWLock) Lock(shardnum uint32) {
+	lock.shards[shardnum].lock()
 }
 
 // Unlock releases a write lock for the shard corresponding to the provided key.
-func (lock *ShardedRWLock) Unlock(key string) {
-	shard := lock.getShard(key)
-	shard.unlock()
+func (lock *ShardedRWLock) Unlock(shardnum uint32) {
+	lock.shards[shardnum].unlock()
 }
