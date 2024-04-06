@@ -38,9 +38,11 @@ void rwlock_unlock(pthread_rwlock_t *lock) {
 }
 */
 import "C"
+/*
 import (
 	"hash/fnv"
 )
+*/
 
 // RWLockShard represents a single shard containing a POSIX read-write lock.
 type RWLockShard struct {
