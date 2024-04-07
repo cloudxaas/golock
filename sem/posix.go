@@ -60,3 +60,15 @@ func (s *Sem) Close() error {
     }
     return nil
 }
+
+// Unlink removes a named semaphore.
+func Unlink(name string) error {
+    cName := C.CString(name)
+    defer C.free(unsafe.Pointer(cName))
+    
+    // Attempt to unlink the semaphore.
+    if C.sem_unlink(cName) == -1 {
+        return errors.New("failed to unlink semaphore")
+    }
+    return nil
+}
