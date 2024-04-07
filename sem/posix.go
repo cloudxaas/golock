@@ -5,6 +5,7 @@ package posixsem
 /*
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <stdlib.h> 
 #include <semaphore.h>
 #include <errno.h>
 
