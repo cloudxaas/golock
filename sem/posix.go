@@ -30,7 +30,8 @@ func Open(name string, value uint) (*Sem, error) {
     cName := C.CString(name)
     defer C.free(unsafe.Pointer(cName))
 
-    sem := C.sem_open_wrapper(cName, C.O_CREAT|C.O_EXCL, C.S_IRUSR|C.S_IWUSR, C.uint(value))
+    // Remove O_EXCL flag to allow opening an existing semaphore.
+    sem := C.sem_open_wrapper(cName, C.O_CREAT, C.S_IRUSR|C.S_IWUSR, C.uint(value))
     if sem == C.SEM_FAILED {
         return nil, errors.New("failed to open semaphore")
     }
@@ -44,6 +45,8 @@ func (s *Sem) Wait() error {
     }
     return nil
 }
+
+
 
 // Post increases the semaphore value (unlock/post).
 func (s *Sem) Post() error {
